@@ -1,36 +1,43 @@
 import React from "react";
-import { View, Text, FlatList, Image } from "react-native";
+import { View, Text, FlatList, Image, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
+import MovieCard from "../components/movie_card";
+import { colors } from "../constants/colors";
 
 const FavoriteMoviesPage = () => {
   const favoriteMovies = useSelector((state) => state.movies.favoriteMovies);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      {/* <Text style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}>
-        Favorite Movies
-      </Text> */}
+    <View style={styles.container}>
       <FlatList
         data={favoriteMovies}
-        keyExtractor={(item) => item.title.toString()}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginVertical: 5,
-            }}
-          >
-            <Image
-              source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster}` }}
-              style={{ width: 50, height: 75, marginRight: 10 }}
-            />
-            <Text>{item.title}</Text>
-          </View>
+        keyExtractor={(item) => item.index}
+        renderItem={(item) => <MovieCard {...item.item} />}
+        ListEmptyComponent={() => (
+          <Text style={styles.emptyList}>No results found.</Text>
         )}
+        numColumns={2}
+        columnWrapperStyle={styles.columnWrapper}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.primary,
+    padding: 16,
+  },
+  columnWrapper: {
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  emptyList: {
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 20,
+  },
+});
 
 export default FavoriteMoviesPage;

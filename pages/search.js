@@ -85,7 +85,15 @@
 
 // export default Search;
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, TextInput, FlatList, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  FlatList,
+  Text,
+  Platform,
+  StatusBar,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSearchResults, searchMovies } from "../redux/slices/movies_slice";
 import MovieCard from "../components/movie_card";
@@ -95,7 +103,7 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.movies.filteredMovies);
-  console.log(movies);
+  // console.log(movies);
 
   const handleSearch = (text) => {
     setSearchTerm(text);
@@ -151,7 +159,8 @@ const Search = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 16 : 0,
+    paddingHorizontal: 16,
     backgroundColor: colors.primary,
   },
   searchInput: {

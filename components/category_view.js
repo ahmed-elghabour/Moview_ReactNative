@@ -27,7 +27,7 @@ const CategoryView = ({ movies, categoryName }) => {
           iconColor={colors.secondary}
           size={25}
           style={{ position: "absolute", right: 0 }}
-          onPress={() => console.log("Pressed")}
+          // onPress={() => console.log("Pressed")}
         />
       </View>
       <FlatList
